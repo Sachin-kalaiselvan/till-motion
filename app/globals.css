@@ -1,26 +1,151 @@
 @import "tailwindcss";
 
+/* ─── TIL Design System — Premium Ingredient Lab ─────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm espresso backgrounds */
+  --bg-void:     #100C07;   /* the void between ingredients */
+  --bg-surface:  #1A1208;   /* elevated surfaces */
+  --bg-card:     #231810;   /* card surfaces */
+
+  /* Warm cream text hierarchy */
+  --text-primary:   #EDE6D8; /* main text — warm cream */
+  --text-secondary: #B8A48A; /* secondary — warm sand */
+  --text-muted:     #7A6652; /* muted — warm dark tan */
+
+  /* Brass — the connective material */
+  --brass:       #C49A3C;
+  --brass-50:    rgba(196, 154, 60, 0.50);
+  --brass-35:    rgba(196, 154, 60, 0.35);
+  --brass-20:    rgba(196, 154, 60, 0.20);
+  --brass-10:    rgba(196, 154, 60, 0.10);
+  --brass-06:    rgba(196, 154, 60, 0.06);
+
+  /* Warm cream strokes (shapes, borders) */
+  --cream-60:    rgba(230, 218, 196, 0.60);
+  --cream-45:    rgba(230, 218, 196, 0.45);
+  --cream-30:    rgba(230, 218, 196, 0.30);
+  --cream-18:    rgba(230, 218, 196, 0.18);
+  --cream-08:    rgba(230, 218, 196, 0.08);
+
+  /* Ingredient card surface (light card on dark field) */
+  --card-paper:  #F0E8D8;   /* warm paper */
+  --card-ink:    #2C1C0C;   /* dark ink on paper */
+  --card-brass:  rgba(196, 154, 60, 0.65);
+
+  /* Display typography */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:    'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'Courier New', Courier, monospace;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-void);
+  --color-foreground: var(--text-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis owns all scroll behaviour */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ─── Typography scale ───────────────────────────────────────────────────── */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+}
+
+.display-sm {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.metric {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+/* ─── S6 ring breathing (post-assembly) ─────────────────────────────────── */
+
+@keyframes ring-breathe {
+  0%,100% { opacity: 0.20; }
+  50%      { opacity: 0.32; }
+}
+
+.ring-breathing {
+  animation: ring-breathe 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring-breathing { animation: none; }
+}
+
+/* ─── Ingredient orbit personalities (S4) ───────────────────────────────── */
+
+@keyframes lemniscate {
+  0%   { transform: translate(calc(var(--amp,1) * 0px),   calc(var(--amp,1) * 0px)); }
+  25%  { transform: translate(calc(var(--amp,1) * 28px),  calc(var(--amp,1) * -10px)); }
+  50%  { transform: translate(calc(var(--amp,1) * 0px),   calc(var(--amp,1) * 0px)); }
+  75%  { transform: translate(calc(var(--amp,1) * -28px), calc(var(--amp,1) * 10px)); }
+  100% { transform: translate(calc(var(--amp,1) * 0px),   calc(var(--amp,1) * 0px)); }
+}
+@keyframes breathe {
+  0%,100% { transform: scale(calc(1 + var(--amp,1) * 0.00)); }
+  50%     { transform: scale(calc(1 + var(--amp,1) * 0.06)); }
+}
+@keyframes spin-orbit {
+  0%   { transform: translate(calc(var(--amp,1)*0px),   calc(var(--amp,1)*0px))   rotate(0deg); }
+  25%  { transform: translate(calc(var(--amp,1)*14px),  calc(var(--amp,1)*-8px))  rotate(90deg); }
+  50%  { transform: translate(calc(var(--amp,1)*0px),   calc(var(--amp,1)*0px))   rotate(180deg); }
+  75%  { transform: translate(calc(var(--amp,1)*-14px), calc(var(--amp,1)*8px))   rotate(270deg); }
+  100% { transform: translate(calc(var(--amp,1)*0px),   calc(var(--amp,1)*0px))   rotate(360deg); }
+}
+@keyframes drift {
+  0%   { transform: translate(calc(var(--amp,1)*0px),   calc(var(--amp,1)*0px)); }
+  20%  { transform: translate(calc(var(--amp,1)*16px),  calc(var(--amp,1)*-14px)); }
+  45%  { transform: translate(calc(var(--amp,1)*-10px), calc(var(--amp,1)*18px)); }
+  70%  { transform: translate(calc(var(--amp,1)*20px),  calc(var(--amp,1)*8px)); }
+  85%  { transform: translate(calc(var(--amp,1)*-16px), calc(var(--amp,1)*-6px)); }
+  100% { transform: translate(calc(var(--amp,1)*0px),   calc(var(--amp,1)*0px)); }
+}
+@keyframes rise {
+  0%   { transform: translate(calc(var(--amp,1)*0px),  calc(var(--amp,1)*0px)); }
+  40%  { transform: translate(calc(var(--amp,1)*6px),  calc(var(--amp,1)*-20px)); }
+  60%  { transform: translate(calc(var(--amp,1)*-4px), calc(var(--amp,1)*-18px)); }
+  100% { transform: translate(calc(var(--amp,1)*0px),  calc(var(--amp,1)*0px)); }
+}
+
+.orbit-lemniscate { animation: lemniscate 9s ease-in-out infinite; transform-origin: center; }
+.orbit-breathe    { animation: breathe 4s ease-in-out infinite; transform-origin: center; }
+.orbit-spin       { animation: spin-orbit 12s linear infinite; transform-origin: center; }
+.orbit-drift      { animation: drift 10s ease-in-out infinite; transform-origin: center; }
+.orbit-rise       { animation: rise 5s ease-in-out infinite; transform-origin: center bottom; }

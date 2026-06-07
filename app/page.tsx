@@ -15,12 +15,10 @@ export default function Page() {
   return (
     <SubjectProvider>
       <LayoutGroup id="til-page">
-        <div style={{ background: "#080808", color: "#efefef", minHeight: "100vh" }}>
+        <div style={{ background: "var(--bg-void)", color: "var(--text-primary)", minHeight: "100vh" }}>
 
           <ParallaxLayer layer="fixedOverlay">
-            {/* DockedSubject: renders during state=docked (S2–S5) */}
             <DockedSubject />
-            {/* AssembledSubject: renders during state=assembled (S6 Phase 5) */}
             <AssembledSubject />
             <nav style={{
               position: "fixed", top: 0, left: 0, right: 0,
@@ -29,11 +27,11 @@ export default function Page() {
               zIndex: 50, pointerEvents: "none",
             }}>
               <span style={{
-                fontFamily: "monospace", fontSize: 10,
-                letterSpacing: "0.16em", textTransform: "uppercase",
-                opacity: 0.22, pointerEvents: "auto",
+                fontFamily: "var(--font-mono,'Courier New',monospace)",
+                fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase",
+                color: "var(--text-muted)", pointerEvents: "auto",
               }}>
-                S1 · S2 · S3 · S4 · S5 · S6
+                The Ingredient List
               </span>
             </nav>
           </ParallaxLayer>
